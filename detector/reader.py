@@ -9,8 +9,6 @@ class Reader():
     @classmethod
     def load_csv_to_df(cls, filename):
         '''
-        (str) -> pandas DataFrame
-
         Get data from csv file to pandas dataframe
         '''
         df = pd.DataFrame()
