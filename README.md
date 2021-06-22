@@ -66,8 +66,10 @@ python -m unittest discover tests
 from detector.analysis import Analysis
 
 analysis = Analysis(filename=None, stock_symbols=[])
-# I.e.
+# Example 1: analysis on Amazon
 analysis = Analysis("traders_data.csv", ["AMZN"])
+# Example 2: analysis on all stocks
+analysis = Analysis("traders_data.csv")
 
 # Suspicious traders ranking
 analysis.count_suspicious_per_trader()

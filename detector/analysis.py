@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class Analysis():
-    def __init__(self, filename, stock_symbols):
+    def __init__(self, filename, stock_symbols=[]):
         '''
         Get suspicious data
         '''
@@ -38,9 +38,13 @@ class Analysis():
         # Mark suspicious
         # 1. Not a trading date for the stock - missing Data values from yahoo
         # 2. Price is outside of the trading price range in the day
+
+        # Series of true or false
         suspicious = data.Date.isnull() | (
             data.price > data.High) | (data.price < data.Low)
+        # Filter data by suspicious
         data = data[suspicious]
+        # Create new column suspicious and put value as 1
         data.loc[:, 'suspicious'] = 1
         return data
 
@@ -57,6 +61,7 @@ class Analysis():
         data = grouped.to_frame().reset_index()
         # index starts from 1
         data.index += 1
+        # name index as rank
         data.index.name = "rank"
         return data
 

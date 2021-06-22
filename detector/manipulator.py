@@ -7,7 +7,7 @@ class Manipulator():
     Data manipulator - clean up and merge data
     '''
 
-    def __init__(self, traders_data_file, stock_symbols):
+    def __init__(self, traders_data_file, stock_symbols=[]):
         '''
         initialise with traders data
         '''
@@ -22,6 +22,7 @@ class Manipulator():
         '''
         # Read data from csv file
         raw_traders_data_df = Reader.load_csv_to_df(traders_data_file)
+        # Return transformed data
         return self.__transform_traders_data(raw_traders_data_df, self.stock_symbols)
 
     @staticmethod
@@ -49,11 +50,12 @@ class Manipulator():
         # Combine firstName and lastName
         traders_data_df.loc[:, 'name'] = traders_data_df.firstName + \
             ' ' + traders_data_df.lastName
-        # ------------------------
-        # Keep selected stock only
-        # ------------------------
-        traders_data_df = traders_data_df[traders_data_df.stockSymbol.isin(
-            stock_symbols)]
+        # ----------------------------------------------------------------
+        # Keep selected stocks only if provided, otherwise show all stocks
+        # ----------------------------------------------------------------
+        if stock_symbols:
+            traders_data_df = traders_data_df[traders_data_df.stockSymbol.isin(
+                stock_symbols)]
         return traders_data_df[['countryCode', 'name', 'traderId', 'stockSymbol', 'stockName', 'price', 'tradeDate']]
 
     def __get_stocks_list(self):
