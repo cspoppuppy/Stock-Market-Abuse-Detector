@@ -1,20 +1,25 @@
 # Market Abuse Detection
 
-Analyse suspicious trades using traders data and stocks data.
+-   Use traders data (csv files) and stocks data (Yahoo), analyse suspicious trades of one or more stock(s).
 
-Analysis are displayed using Flask.
+    -   Trades that happened in a non trading day of the stock
+    -   Trades that outside of the price range of the day
 
-### Assumptions
+-   Display susppicious traders (ranking table), and suspicious trades by country
 
-Bad data excluded from analysis:
+-   Results are displayed using Flask.
 
--   Traders data with no stockSymbol
--   Traders data with no traderId
--   Traders data with no tradeDatetime
+-   #### Assumptions
 
-Ignored as suspicious:
+    Bad data excluded from analysis:
 
--   Traders data with missing price
+    -   Traders data with no stockSymbol
+    -   Traders data with no traderId
+    -   Traders data with no tradeDatetime
+
+    Ignored as suspicious:
+
+    -   Traders data with missing price
 
 ### Setup
 
@@ -60,7 +65,7 @@ Open in browser, url: http://127.0.0.1:5000/
 python -m unittest discover tests
 ```
 
-### How to use package
+### How to use package (detector)
 
 ```python
 from detector.analysis import Analysis
