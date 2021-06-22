@@ -3,6 +3,13 @@ import pandas as pd
 
 
 class Analysis():
+    '''
+    Analysis on manipulated data
+
+    - count_suspicious_per_trader()
+    - count_suspicious_by_country_per_month()
+    '''
+
     def __init__(self, filename, stock_symbols=[]):
         '''
         Get suspicious data

@@ -23,7 +23,6 @@ class TestAnalysis(unittest.TestCase):
         '''
         Compare the result from count_suspicious_per_trader() with expected result
         '''
-        print(self.analysis.data)
         df = self.analysis.count_suspicious_per_trader()
         self.assertEqual(
             df.to_dict(), self.expected_suspicious_traders_data.to_dict())
@@ -33,7 +32,6 @@ class TestAnalysis(unittest.TestCase):
         Compare the result from count_suspicious_by_country_per_month() with expected result
         '''
         df = self.analysis.count_suspicious_by_country_per_month()
-        print(df)
         self.assertEqual(
             df.to_dict(), self.expected_suspicious_country_data.to_dict())
 

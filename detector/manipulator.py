@@ -23,18 +23,30 @@ class Manipulator():
         # Read data from csv file
         raw_traders_data_df = Reader.load_csv_to_df(traders_data_file)
         # Return transformed data
-        return self.__transform_traders_data(raw_traders_data_df, self.stock_symbols)
+        return self.__process_traders_data(raw_traders_data_df, self.stock_symbols)
 
     @staticmethod
-    def __transform_traders_data(raw_traders_data_df, stock_symbols):
+    def __process_traders_data(raw_traders_data_df, stock_symbols):
         '''
         Transform traders data from CSV file
         '''
+        # ----------------------------------------------------------------
+        # Filter out bad data
+        # ----------------------------------------------------------------
         # Remove rows without stockSymbol, traderId, or tradeDatetime
         traders_data_df = raw_traders_data_df[raw_traders_data_df.stockSymbol.notnull(
         ) & raw_traders_data_df.traderId.notnull(
         ) & raw_traders_data_df.tradeDatetime.notnull(
         )]
+        # ----------------------------------------------------------------
+        # Keep selected stocks only if provided, otherwise show all stocks
+        # ----------------------------------------------------------------
+        if stock_symbols:
+            traders_data_df = traders_data_df[traders_data_df.stockSymbol.isin(
+                stock_symbols)]
+        # ----------------------------------------------------------------
+        # Transform data
+        # ----------------------------------------------------------------
         # Format countryCode and stockSymbol columns as category for better performance
         traders_data_df.countryCode = traders_data_df.countryCode.astype(
             'category')
@@ -50,12 +62,7 @@ class Manipulator():
         # Combine firstName and lastName
         traders_data_df.loc[:, 'name'] = traders_data_df.firstName + \
             ' ' + traders_data_df.lastName
-        # ----------------------------------------------------------------
-        # Keep selected stocks only if provided, otherwise show all stocks
-        # ----------------------------------------------------------------
-        if stock_symbols:
-            traders_data_df = traders_data_df[traders_data_df.stockSymbol.isin(
-                stock_symbols)]
+
         return traders_data_df[['countryCode', 'name', 'traderId', 'stockSymbol', 'stockName', 'price', 'tradeDate']]
 
     def __get_stocks_list(self):
@@ -91,10 +98,10 @@ class Manipulator():
         raw_stock_data = Reader.fetch_yahoo_stock_data_to_df(
             stocks_list, start_date, end_date)
 
-        return self.__transform_stocks_data(raw_stock_data)
+        return self.__process_stocks_data(raw_stock_data)
 
     @staticmethod
-    def __transform_stocks_data(raw_stocks_data_df):
+    def __process_stocks_data(raw_stocks_data_df):
         '''
         Transform raw stocks data from yahoo
         '''
