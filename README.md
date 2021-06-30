@@ -70,7 +70,7 @@ python -m unittest discover tests
 ```python
 from detector.analysis import Analysis
 
-analysis = Analysis(filename=None, stock_symbols=[])
+analysis = Analysis(filename, stock_symbols=[])
 # Example 1: analysis on Amazon
 analysis = Analysis("traders_data.csv", ["AMZN"])
 # Example 2: analysis on all stocks
