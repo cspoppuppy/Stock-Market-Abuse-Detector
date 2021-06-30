@@ -1,6 +1,8 @@
 from .reader import Reader
 import pandas as pd
 
+pd.options.mode.chained_assignment = None
+
 
 class Manipulator():
     '''
