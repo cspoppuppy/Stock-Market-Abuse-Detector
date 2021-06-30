@@ -56,9 +56,9 @@ class Manipulator():
         # Transform data
         # ----------------------------------------------------------------
         # Format countryCode and stockSymbol columns as category for better performance
-        traders_data_df.countryCode = traders_data_df.countryCode.astype(
+        traders_data_df.loc[:, 'countryCode'] = traders_data_df.countryCode.astype(
             'category')
-        traders_data_df.stockSymbol = traders_data_df.stockSymbol.astype(
+        traders_data_df.loc[:, 'stockSymbol'] = traders_data_df.stockSymbol.astype(
             'category')
         # Create new tradeDate column with datetime type
         # truncate to date
@@ -132,7 +132,8 @@ class Manipulator():
         # reset index
         stocks_data_df = stocks_data_df.reset_index()
         # Format Symbols column as category for better performance
-        stocks_data_df.Symbols = stocks_data_df.Symbols.astype('category')
+        stocks_data_df.loc[:, 'Symbols'] = stocks_data_df.Symbols.astype(
+            'category')
         # Keep columns needed
         return stocks_data_df[['Symbols', 'Date', 'High', 'Low']]
 
