@@ -12,6 +12,8 @@ class Analysis():
 
     def __init__(self, filename, stock_symbols=[]):
         '''
+        (str, list) -> NoneType
+
         Get suspicious data
         '''
         self.stock_symbols = stock_symbols
@@ -20,6 +22,8 @@ class Analysis():
 
     def __get_data_for_analysis(self, filename):
         '''
+        (str) -> pandas DataFrame
+
         Keep suspicious records, start date and end date from manipulated data
         '''
         self.__get_manipulated_data(filename)
@@ -28,6 +32,8 @@ class Analysis():
 
     def __get_manipulated_data(self, filename):
         '''
+        (str)
+
         Get manipulated data
         '''
         manipulator = Manipulator(filename, self.stock_symbols)
@@ -40,6 +46,8 @@ class Analysis():
     @staticmethod
     def __get_suspicious(data):
         '''
+        (pandas DataFrame) -> pandas DataFrame
+
         Keep suspicious data, add suspicious column with value 1
         '''
         # Mark suspicious
@@ -57,6 +65,8 @@ class Analysis():
 
     def count_suspicious_per_trader(self):
         '''
+        () -> pandas DataFrame
+
         List suspicious trades by traders in descending order (return pandas data frame)
         '''
         # sum suspicious trades group by trader and sort in descending order
@@ -74,6 +84,8 @@ class Analysis():
 
     def count_suspicious_by_country_per_month(self):
         '''
+        () -> pandas DataFrame
+
         List suspicious trades by country per month (return pandas data frame)
         '''
         # sum suspicious trades group by tradeDate and country and sort in descending order
@@ -96,6 +108,8 @@ class Analysis():
     @staticmethod
     def __group_suspicious_data(data, groupers):
         '''
+        (pandas DataFrame, list) -> pandas DataFrameGroupBy
+
         Group data frame by groupers, and sum suspicious
         '''
         return data.groupby(
@@ -104,6 +118,8 @@ class Analysis():
     @staticmethod
     def __format_country_headers(columns, index):
         '''
+        (pandas Index, pandas Index) -> Tuple of pandas Index
+
         Format and remane column headers and index
         '''
         # drop top level index

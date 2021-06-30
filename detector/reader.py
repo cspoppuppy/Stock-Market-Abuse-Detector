@@ -9,6 +9,8 @@ class Reader():
     @classmethod
     def load_csv_to_df(cls, filename):
         '''
+        (str) -> pandas DataFrame
+
         Get data from csv file to pandas dataframe
         '''
         df = pd.DataFrame()
@@ -23,6 +25,8 @@ class Reader():
     @classmethod
     def fetch_yahoo_stock_data_to_df(cls, stock_syms, start_date, end_date):
         '''
+        (list, str, str) -> pandas DataFrame
+
         start_date: YYYY-MM-DD
         end_date: YYYY-MM-DD
 

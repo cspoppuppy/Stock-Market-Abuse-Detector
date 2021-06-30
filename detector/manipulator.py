@@ -9,6 +9,8 @@ class Manipulator():
 
     def __init__(self, traders_data_file, stock_symbols=[]):
         '''
+        (str, list) -> NoneType
+
         initialise with traders data
         '''
         self.stock_symbols = stock_symbols
@@ -18,6 +20,8 @@ class Manipulator():
 
     def __get_traders_data_from_csv(self, traders_data_file):
         '''
+        (str) -> pandas DataFrame
+
         Get data from csv file and transform
         '''
         # Read data from csv file
@@ -28,6 +32,8 @@ class Manipulator():
     @staticmethod
     def __process_traders_data(raw_traders_data_df, stock_symbols):
         '''
+        (pandas DataFrame, list) -> pandas DataFrame
+
         Transform traders data from CSV file
         '''
         # ----------------------------------------------------------------
@@ -67,6 +73,8 @@ class Manipulator():
 
     def __get_stocks_list(self):
         '''
+        () -> list
+
         Get an unique list of stock symbols from traders data
         '''
         return self.traders_data_df.stockSymbol.unique()
@@ -74,6 +82,8 @@ class Manipulator():
     @property
     def trading_start_date(self):
         '''
+        () -> str: YYYY-MM-DD
+
         Get the earliest trade date from traders data
         '''
         return self.traders_data_df.tradeDate.min().strftime('%Y-%m-%d')
@@ -81,12 +91,16 @@ class Manipulator():
     @property
     def trading_end_date(self):
         '''
+        () -> str: YYYY-MM-DD
+
         Get the latest trade date from traders data
         '''
         return self.traders_data_df.tradeDate.max().strftime('%Y-%m-%d')
 
     def __fetch_stocks_data_from_yahoo(self):
         '''
+        () -> pandas DataFrame
+
         Get stocks daily pricing data from yahoo
         for stocks exist in traders data
         and limit the date range according to traders data
@@ -103,6 +117,8 @@ class Manipulator():
     @staticmethod
     def __process_stocks_data(raw_stocks_data_df):
         '''
+        (pandas DataFrame) -> pandas DataFrame
+
         Transform raw stocks data from yahoo
         '''
         # unpivot data
@@ -120,6 +136,8 @@ class Manipulator():
 
     def manipulate(self):
         '''
+        () -> pandas DataFrame
+
         Produce a clean set of of merged traders data and Yahoo stocks data (return pandas dataframe)
         '''
         # raise error if there is no valid traders data or stocks data after data transform
@@ -135,6 +153,8 @@ class Manipulator():
     @staticmethod
     def __join_traders_and_stocks_data(traders_data_df, stocks_data_df):
         '''
+        (pandas DataFrame, pandas DataFrame) -> pandas DataFrame
+
         Merge traders and stocks data
         '''
         joined_df = pd.merge(traders_data_df, stocks_data_df, left_on=[
